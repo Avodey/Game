@@ -3,7 +3,7 @@ import os
 import pygame
 from Player import Player
 from Bottle import Bottle
-
+  
 def main():
     pygame.init()
 
@@ -12,7 +12,7 @@ def main():
     SCREEN_Y = 600
 
     screen = pygame.display.set_mode((SCREEN_X, SCREEN_Y))
-
+    
     # 1.0 instantiate Player class
     player = Player((SCREEN_X / 2) - (35 / 2), (SCREEN_Y - 100), 350, 300, pygame.image.load("Assets/Guy.png"))
     player.x = 1
@@ -21,11 +21,12 @@ def main():
     bottle = Bottle(50, 100, 30, 30, pygame.image.load("Assets/Alcohol.png"))
 
     # Fill the background with black
-
+    bg = pygame.image.load("Assets/TempBackgr.png")
+    
     # Run until the user asks to quit
     running = True
     while running:
-        screen.fill((0, 0, 0))  # Fills the screen with black
+        screen.blit(bg, (0, 0))  # Fills the screen with black
 
         screen.blit(player.image, (player.x, player.y))
 
@@ -51,7 +52,6 @@ def main():
             if event.key == pygame.K_UP:
                 # screen.blit(player.image, (player.x, player.y))
                 player.y -= 0.35
-
             if event.key == pygame.K_DOWN:
                 # screen.blit(player.image, (player.x, player.y))
                 player.y += 0.35
