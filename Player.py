@@ -7,5 +7,6 @@ class Player:
         self.length = length
         self.height = height
         self.image = image
-        self.image = pygame.transform.scale(image, (length*5, height*5))
+        self.image = pygame.transform.scale(image, (length, height))
+
 
