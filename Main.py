@@ -1,97 +1,52 @@
-import os
-# Import and initialize the pygame library
 import pygame
 from Player import Player
-from Bottle import Bottle
 
+pygame.init()
+# Set the size of the game window
+screen = pygame.display.set_mode((800, 600))
+# Name of the game window
+pygame.display.set_caption("First Game")
+#  Clock to allow for smooth movement
+clock = pygame.time.Clock()
+# Speed of the player
+playerSpeed = 200
+# Loads the player image and the size of the player
+playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 100))
+# Initiates 'Player.py' class and its starting location on the screen, x and y
+player = Player(1, 1, playerImage)
 
+run = True
+while run:  # Checks for the user trying to quit the game
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
 
-#define colours
-white = (255, 255, 255)
+    """
+    To get smooth movement we need to limit screen updating
+    to 60 pixels a second which will allow us to make the
+    player go whatever speed we want it to.
+    """
+    timedelta = clock.tick(60)  # Limits screen updating to 60 pixels per second
+    timedelta /= 1000  # Converts milliseconds to seconds
 
+    # Detection of keyboard inputs
+    keys = pygame.key.get_pressed()
 
-def main():
-    pygame.init()
-    #define fonts
-    font30 = pygame.font.SysFont('Constantia', 30)
-    font40 = pygame.font.SysFont('Constantia', 40)
+    if keys[pygame.K_LEFT]:
+        player.x -= playerSpeed * timedelta  # x = x - speed * seconds
 
-    # Set 'constants' for max X and Y size for the drawing window
-    screen_length = 600
-    screen_height = 800
+    if keys[pygame.K_RIGHT]:
+        player.x += playerSpeed * timedelta  # x = x + speed * seconds
 
-    screen = pygame.display.set_mode((screen_height, screen_length))
+    if keys[pygame.K_UP]:
+        player.y -= playerSpeed * timedelta  # y = y - speed * seconds
 
-        #defne function for creating text
-    def draw_text(text, font, text_col, x, y):
-        img = font.render(text, True, text_col)
-        screen.blit(img, (x, y))
+    if keys[pygame.K_DOWN]:
+        player.y += playerSpeed * timedelta  # y = y + speed * seconds
 
-    #define game variables
-    countdown = 3
-    last_count = pygame.time.get_ticks()
+    screen.fill((0, 0, 0))  # Fills the background screen with black
+    screen.blit(playerImage, (player.x, player.y))  # Renders the player
 
-    #countdown code
-    if countdown > 0:
-        draw_text('GET READY!', font40, white, (screen_height / 2 - 110), int(screen_length / 2 + 50))
-        draw_text(str(countdown), font40, white, int(screen_height / 2 - 10), int(screen_length / 2 + 110))
-        count_timer = pygame.time.get_ticks()
-        if count_timer - last_count > 1000:
-            countdown -= 1
-            last_count = count_timer
-            
-    # 1.0 instantiate Player class
-    player = Player((screen_height / 2) - (35 / 2), (screen_length - 100), 350, 300, pygame.image.load("Assets/Guy.png"))
-    player.x = 1
-    player.y = 1
-    # 1.1 instantiate Bottle class
-    bottle = Bottle(50, 100, 30, 30, pygame.image.load("Assets/Alcohol.png"))
+    pygame.display.update()  # Updates the screen rendering. Only one is needed at any time.
 
-    # Background image
-    bg = pygame.image.load("Assets/TempBackgr.png")
- 
-    
-    # Run until the user asks to quit
-    running = True
-    while running:
-        screen.blit(bg, (0, 0))  # Fills the screen with black
-
-        screen.blit(player.image, (player.x, player.y))
-
-        player.__init__(player.x, player.y, 100, 110, player.image)
-
-        # pygame.draw.rect(screen, (0, 255, 0), (player.x, 20, 20, 20))
-        # pygame.display.update()
-
-        # Did the user click the window close button?
-        for event in pygame.event.get():
-            screen = pygame.display.set_mode((screen_height, screen_length))
-            if event.type == pygame.QUIT:
-                running = False
-
-        # 1.0 detect keypress
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                # screen.blit(player.image, (player.x, player.y))
-                player.x -= 1.35
-            if event.key == pygame.K_RIGHT:
-                # screen.blit(player.image, (player.x, player.y))
-                player.x += 1.35
-            if event.key == pygame.K_UP:
-                # screen.blit(player.image, (player.x, player.y))
-                player.y -= 1.35
-            if event.key == pygame.K_DOWN:
-                # screen.blit(player.image, (player.x, player.y))
-                player.y += 1.35
-
-
-
-        # Flip the display
-        pygame.display.flip()
-
-    # End
-    pygame.quit()
-
-if __name__ == "__main__":
-    run = main()
-    run
+pygame.quit()
