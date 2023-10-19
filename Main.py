@@ -12,6 +12,8 @@ clock = pygame.time.Clock()
 playerSpeed = 200
 # Loads the player image and the size of the player
 playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 100))
+backgroundImage = pygame.transform.scale(pygame.image.load("Assets/TempBackgr.png"), (screen.get_width(), screen.get_height()))  # Renders the player
+
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
 
@@ -45,6 +47,8 @@ while run:  # Checks for the user trying to quit the game
         player.y += playerSpeed * timedelta  # y = y + speed * seconds
 
     screen.fill((0, 0, 0))  # Fills the background screen with black
+    screen.blit(backgroundImage, (0, 0))  # Renders the background
+
     screen.blit(playerImage, (player.x, player.y))  # Renders the player
 
     pygame.display.update()  # Updates the screen rendering. Only one is needed at any time.
