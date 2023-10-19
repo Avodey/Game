@@ -14,6 +14,12 @@ timer_font = pygame.font.SysFont('Verdana', 38)
 timer_sec = 60
 timer_text = timer_font.render(time.strftime('%M:%S', time.gmtime(timer_sec)), True, (255, 255, 255))
 
+# Score code
+score = 0
+score_increment = 10
+font = pygame.font.SysFont('Constansia', 30)
+score_text = font.render(f'Score: {score}', True, (0, 255, 0))
+
 # Userevent for timer
 timer = pygame.USEREVENT + 1                                                
 pygame.time.set_timer(timer, 1000)    # sets timer with USEREVENT and delay in milliseconds
@@ -77,6 +83,8 @@ while run:  # Checks for the user trying to quit the game
     screen.blit(playerImage, (player.x, player.y))  # Renders the player
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
     screen.blit(timer_text, (300, 20))
+    score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
     pygame.display.update()  # Updates the screen rendering. Only one is needed at any time.
 
 pygame.quit()
