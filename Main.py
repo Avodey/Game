@@ -32,7 +32,7 @@ playerSpeed = 200
 
 # Loads the player image and the size of the player
 playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 100))
-backgroundImage = pygame.transform.scale(pygame.image.load("Assets/TempBackgr.png"), (screen.get_width(), screen.get_height()))  # Renders the player
+backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.png"), (screen.get_width(), screen.get_height()))  # Renders the player
 
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
@@ -62,6 +62,7 @@ while run:  # Checks for the user trying to quit the game
                 timer_text = timer_font.render(time.strftime('%M:%S', time.gmtime(timer_sec)), True, (255, 255, 255))
             else:
                 pygame.time.set_timer(timer, 0)    # turns off timer event
+    
     # Detection of keyboard inputs
     keys = pygame.key.get_pressed()
 

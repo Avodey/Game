@@ -4,3 +4,4 @@ class Player:
         self.x = x
         self.y = y
         self.image = image
+    
