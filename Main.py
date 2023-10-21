@@ -41,7 +41,14 @@ run = True
 while run:  # Checks for the user trying to quit the game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            running = False
+        if event.type == timer: # checks for timer event
+            if timer_sec > 0:
+                timer_sec -= 1
+                timer_text = timer_font.render(time.strftime('%M:%S', time.gmtime(timer_sec)), True, (255, 255, 255))
+            else:
+                pygame.time.set_timer(timer, 0)    # turns off timer event
+                #Merged loops to fix the stuttering FPS clock hence why it's all up here, if you're going to add a new event, add it to this rather than somewhere else in the code for compatability
 
     """
     To get smooth movement we need to limit screen updating
@@ -53,15 +60,6 @@ while run:  # Checks for the user trying to quit the game
     
     screen.fill((0, 0, 0))
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == timer: # checks for timer event
-            if timer_sec > 0:
-                timer_sec -= 1
-                timer_text = timer_font.render(time.strftime('%M:%S', time.gmtime(timer_sec)), True, (255, 255, 255))
-            else:
-                pygame.time.set_timer(timer, 0)    # turns off timer event
     
     # Detection of keyboard inputs
     keys = pygame.key.get_pressed()
