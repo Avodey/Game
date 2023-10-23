@@ -14,14 +14,10 @@ This is a game about a drunken cowboy who enters a bar seeking more alcohol, due
 
 **Other Useful Information**
 
-1. Discord Server
-***https://discord.gg/H5E7HBUdVk***
-2. Checklist
-***https://docs.google.com/spreadsheets/d/1v229R7l0mTcvrnrb0vW_UGQEkUGpPu3uLcxCj13YRHc/edit#gid=1386834576***
-3. Write-Up Documentation
-***https://docs.google.com/document/d/1frIq7qKG5ZQoPjVNes0Pxc5VhkG27GgfHQkJwp5b-M4/edit?usp=sharing***
-4. GitHub Page
-***https://github.com/Avodey/Game***
+1. [Discord Server](https://discord.gg/H5E7HBUdVk)
+2. [Checklist](https://docs.google.com/spreadsheets/d/1v229R7l0mTcvrnrb0vW_UGQEkUGpPu3uLcxCj13YRHc/edit#gid=1386834576)
+3. [Write-up](https://docs.google.com/document/d/1frIq7qKG5ZQoPjVNes0Pxc5VhkG27GgfHQkJwp5b-M4/edit?usp=sharing)
+4. [GitHub Page](https://github.com/Avodey/Game)
 
 Please Note If You're Unable To Access Any Of These Links, Request For Access
 
