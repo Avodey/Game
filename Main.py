@@ -1,7 +1,7 @@
+import math
 import random
 
 import pygame
-
 from Bottle import Bottle
 from Player import Player
 import time
@@ -40,12 +40,8 @@ bottles = pygame.sprite.Group()
 playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 100))
 backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.png"),
                                          (screen.get_width(), screen.get_height()))  # Renders the player
-
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
-bottle = Bottle("crimson", 500, 300)
-bottles.add(bottle)
-
 
 run = True
 while run:  # Checks for the user trying to quit the game
@@ -53,10 +49,9 @@ while run:  # Checks for the user trying to quit the game
         if event.type == pygame.QUIT:
             run = False
         if event.type == timer:
-            # get mouse coordinates
-            pos = 100
-            # create square
-            bottle = Bottle("Crimson", pos + random.randint(1, screen.get_width()), pos + random.randint(1, screen.get_height()))
+            speed = math.radians(random.randrange(3000, 5000))  # velocity of the throw
+            angle = math.radians(random.randrange(1, 45))  # Angle of throw
+            bottle = Bottle(1, random.randint(1, screen.get_height()), speed, 45)
             bottles.add(bottle)
         if event.type == timer:  # checks for timer event
             if timer_sec > 0:
@@ -75,8 +70,6 @@ while run:  # Checks for the user trying to quit the game
     timedelta /= 1000  # Converts milliseconds to seconds
     screen.fill((0, 0, 0))
 
-    missilesGroup = pygame.sprite.Group()
-
     # Detection of keyboard inputs
     keys = pygame.key.get_pressed()
 
@@ -92,14 +85,11 @@ while run:  # Checks for the user trying to quit the game
     if keys[pygame.K_DOWN]:
         player.y += playerSpeed * timedelta  # y = y + speed * seconds
 
-
     screen.fill((0, 0, 0))  # Fills the background screen with black
     screen.blit(backgroundImage, (0, 0))  # Renders the background
     screen.blit(playerImage, (player.x, player.y))  # Renders the player
-    bottles.update()
-
-    # draw sprite group
-    bottles.draw(screen)
+    bottles.update()  # Draws bottle group
+    bottles.draw(screen)  # Updates bottle group
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
     screen.blit(timer_text, (300, 20))
     score_text = font.render(f'Score: {score}', True, (255, 255, 255))
