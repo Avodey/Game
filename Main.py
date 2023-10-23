@@ -1,5 +1,6 @@
 import pygame
 from Player import Player
+from Bottle import Bottle
 import time
 pygame.init()
 
@@ -26,6 +27,9 @@ pygame.time.set_timer(timer, 1000)    # sets timer with USEREVENT and delay in m
 
 # Clock to allow for smooth movement
 clock = pygame.time.Clock()
+
+# Loads the bottle image
+bottle = pygame.transform.scale(pygame.image.load("Assets/Alcohol.png"), (50, 50))
 
 # Speed of the player
 playerSpeed = 200
@@ -59,9 +63,6 @@ while run:  # Checks for the user trying to quit the game
     timedelta = clock.tick(60)  # Limits screen updating to 60 pixels per second
     timedelta /= 1000  # Converts milliseconds to seconds
     
-    screen.fill((0, 0, 0))
-
-    
     # Detection of keyboard inputs
     keys = pygame.key.get_pressed()
 
@@ -77,9 +78,9 @@ while run:  # Checks for the user trying to quit the game
     if keys[pygame.K_DOWN]:
         player.y += playerSpeed * timedelta  # y = y + speed * seconds
 
-    screen.fill((0, 0, 0))  # Fills the background screen with black
+    # Fills the background screen with black
     screen.blit(backgroundImage, (0, 0))  # Renders the background
-
+    screen.blit(bottle, (100, 100))
     screen.blit(playerImage, (player.x, player.y))  # Renders the player
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
     screen.blit(timer_text, (300, 20))

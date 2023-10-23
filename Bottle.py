@@ -9,3 +9,4 @@ class Bottle:
         self.height = height
         self.image = image
         self.image = pygame.transform.scale(image, (length, height))
+        self.hitbox = (self.x + 17, self.y + 2, 31, 57)
