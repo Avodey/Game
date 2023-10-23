@@ -8,8 +8,8 @@ screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('The Good, The Bad And The Drunk')
 
 background = pygame.image.load('Assets/background.jpg')
-start_button = pygame.image.load('Assets/Alcohol.png')
-exit_button = pygame.image.load('Assets/Guy.png')
+start_button = pygame.image.load('../../Downloads/Game-main/Assets/Alcohol.png')
+exit_button = pygame.image.load('../../Downloads/Game-main/Assets/Guy.png')
 
 while True:
     screen.blit(background, (0, 0))

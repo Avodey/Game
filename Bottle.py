@@ -1,12 +1,16 @@
 import pygame
 
+class Bottle(pygame.sprite.Sprite):
+    def __init__(self, col, x, y):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.Surface((50, 50))
+            self.image = pygame.transform.scale(pygame.image.load("Assets/Alcohol.png"), (100, 100))
+            # self.image.fill(col)
+            self.rect = self.image.get_rect()
+            self.rect.center = (x, y)
 
-class Bottle:
-    def __init__(self, x, y, length, height, image):
-        self.x = x
-        self.y = y
-        self.length = length
-        self.height = height
-        self.image = image
-        self.image = pygame.transform.scale(image, (length, height))
-        self.hitbox = (self.x + 17, self.y + 2, 31, 57)
+    def update(self):
+            self.rect.move_ip(0, 5)
+            # check if sprite has gone off screen
+            #if self.rect.top > :
+              #  self.kill()
