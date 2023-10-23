@@ -29,6 +29,6 @@ Project Team Members:
 - Toby
 - Oliver
 - Izak
-- Yana
+- Iana
 
 **All images and sprites were created in-house and do not infringe on copyright usage.**
