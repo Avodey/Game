@@ -30,6 +30,11 @@ bottleEntity = []
 timer = pygame.USEREVENT + 1
 pygame.time.set_timer(timer, 1000)  # sets timer with USEREVENT and delay in milliseconds
 
+# Userevent for bottle throw speed
+bottleTimer = 0
+pygame.time.set_timer(bottleTimer, 1000)  # sets timer with USEREVENT and delay in milliseconds
+
+
 # Clock to allow for smooth movement
 clock = pygame.time.Clock()
 
@@ -38,8 +43,7 @@ playerSpeed = 200
 bottles = pygame.sprite.Group()
 # Loads the player image and the size of the player
 playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 100))
-backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.png"),
-                                         (screen.get_width(), screen.get_height()))  # Renders the player
+backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.png"), (screen.get_width(), screen.get_height()))  # Renders the player
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
 
@@ -48,10 +52,11 @@ while run:  # Checks for the user trying to quit the game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == timer:
+        if event.type == bottleTimer:
             speed = math.radians(random.randrange(3000, 5000))  # velocity of the throw
-            angle = math.radians(random.randrange(1, 45))  # Angle of throw
-            bottle = Bottle(1, random.randint(1, screen.get_height()), speed, 45)
+            angle = math.radians(random.randrange(15, 45))  # Angle of throw
+
+            bottle = Bottle(0, random.randint(1, screen.get_height()), speed, angle)
             bottles.add(bottle)
         if event.type == timer:  # checks for timer event
             if timer_sec > 0:
@@ -59,6 +64,7 @@ while run:  # Checks for the user trying to quit the game
                 timer_text = timer_font.render(time.strftime('%M:%S', time.gmtime(timer_sec)), True, (255, 255, 255))
             else:
                 pygame.time.set_timer(timer, 0)  # turns off timer event
+
                 # Merged loops to fix the stuttering FPS clock hence why it's all up here, if you're going to add a new event, add it to this rather than somewhere else in the code for compatability
 
     """
