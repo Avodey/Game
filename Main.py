@@ -1,12 +1,10 @@
 import math
 import random
-
+import time
 import pygame
 from Bottle import Bottle
 from Player import Player
-import time
 import spritesheet
-
 from Shadow import Shadow
 
 pygame.init()
@@ -39,6 +37,7 @@ for animation in animation_steps:
         temp_img_list.append(sprite_sheet.get_image(step_counter, 64, 64, Black))
         step_counter += 1
     animation_list.append(temp_img_list)
+
 # Timer
 timer_font = pygame.font.SysFont('Verdana', 38)
 timer_sec = 60
@@ -72,7 +71,6 @@ backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
 
-# Game loop
 run = True
 while run:  # Checks for the user trying to quit the game
     for event in pygame.event.get():
@@ -83,10 +81,12 @@ while run:  # Checks for the user trying to quit the game
             angle = math.radians(random.randrange(15, 45))  # Angle of throw
             startingY = random.randint(1, screen.get_height())
 
-            shadow = Shadow(0, startingY, random.randint(1, 360), time, speed, angle)
-            bottle = Bottle(0, startingY, random.randint(1, 360), speed, angle)
-            bottles.add(bottle)
+            shadow = Shadow(0, startingY, speed, angle)
+            bottle = Bottle(0, startingY, random.randrange(1, 360), speed, angle)
+
             bottles.add(shadow)
+            bottles.add(bottle)
+
 
         if event.type == timer:  # checks for timer event
             if timer_sec > 0:
@@ -131,7 +131,6 @@ while run:  # Checks for the user trying to quit the game
     screen.blit(backgroundImage, (0, 0))  # Renders the background
     screen.blit(playerImage, (player.x, player.y))  # Renders the player
     screen.blit(animation_list[action][frame], (0, 0))
-        
     bottles.update()  # Draws bottle group
     bottles.draw(screen)  # Updates bottle group
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0

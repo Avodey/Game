@@ -1,18 +1,29 @@
-import pygame
+import math
 import random
+import pygame
 
-sprite = pygame.sprite.Sprite
+clock = pygame.time.Clock()
+# milliseconds since start
+NOW_MS = 0
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 600
+
+
 class Bottle(pygame.sprite.Sprite):
     def __init__(self, x, y, time, velocity=0, angle=0):
         pygame.sprite.Sprite.__init__(self)
         self.velocity = velocity  # velocity of the throw
-        self.endPos = random.randint(1, 1000)
         self.angle = angle
         self.x = x
         self.time = time
         self.y = y
         self.image = pygame.Surface((50, 50))
-        self.image = pygame.transform.scale(pygame.image.load("Assets/Alcohol.png"), (50, 50))
+        self.image = [pygame.transform.scale(pygame.image.load("Assets/Alcohol.png"), (50, 50)),
+                      pygame.transform.scale(pygame.image.load("Assets/AlcoholBlue.png"), (50, 50)),
+                      pygame.transform.scale(pygame.image.load("Assets/AlcoholClear.png"), (50, 50)),
+                      pygame.transform.scale(pygame.image.load("Assets/AlcoholGreen.png"), (50, 50)),
+                      pygame.transform.scale(pygame.image.load("Assets/AlcoholWhite.png"), (50, 50))]
+        self.image = self.image[random.randint(0, 4)]
         self.rect = self.image.get_rect()
         self.image = pygame.transform.rotate(self.image, time)
         self.rect.center = (1, self.y)
@@ -24,7 +35,7 @@ class Bottle(pygame.sprite.Sprite):
         self.velocity = velocity
         self.angle = angle_rads
 
-    def drawShadow(self):
+    def update(self):
         global NOW_MS
         if self.velocity > 0:
             NOW_MS = pygame.time.get_ticks()
@@ -32,37 +43,15 @@ class Bottle(pygame.sprite.Sprite):
             self.time += 100
             if time_change > 0:
                 #  re-calculate the velocity
-
-                half_gravity_time_squared = -9.8 * time_change * time_change / 2.0
-                displacement_x = self.velocity * math.sin(self.angle) * time_change
-                #displacement_y = self.velocity * math.cos(self.angle) * time_change + half_gravity_time_squared
-                # reposition sprite
-                self.rect.center = (self.x + int(displacement_x), self.y)
-                # Stop at the edge of the window
-                if self.rect.y >= WINDOW_HEIGHT:  # Gravity means we only need this for yAxis
-                    self.velocity = 0  # This will set the bottle velocity to 0
-                    self.kill()  # This will delete the bottle for performance
-                if self.rect.x >= self.y:
-                    self.velocity = 0
-                    self.kill()
-
-    def update(self):
-        global NOW_MS
-        if self.velocity > 0:
-            #print("Velocity:", self.velocity, "Angle:", self.angle, "MS:", NOW_MS)
-            NOW_MS = pygame.time.get_ticks()
-            time_change = (NOW_MS - self.start_time) / 200  # Gravity of the bottle (probably don't change)
-
-            if time_change > 0:
-                #print("Calculating")
-                # re-calcualte the velocity
                 half_gravity_time_squared = -9.8 * time_change * time_change / 2.0
                 displacement_x = self.velocity * math.sin(self.angle) * time_change
                 displacement_y = self.velocity * math.cos(self.angle) * time_change + half_gravity_time_squared
                 # reposition sprite
                 self.rect.center = (self.x + int(displacement_x), self.y - int(displacement_y))
-
                 # Stop at the edge of the window
                 if self.rect.y >= WINDOW_HEIGHT:  # Gravity means we only need this for yAxis
                     self.velocity = 0  # This will set the bottle velocity to 0
-                    self.kill()  # This will delete the bottle for performance
+                    self.kill()  # This will delete the bottle at the bottom of the screen for performance
+                if self.rect.y >= self.y:
+                    self.velocity = 0
+                    self.kill()  # This will delete the on the ground

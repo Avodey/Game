@@ -9,16 +9,14 @@ WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 
 class Shadow(pygame.sprite.Sprite):
-    def __init__(self, x, y, time, endpoint, velocity=0, angle=0):
+    def __init__(self, x, y, velocity=0, angle=0):
         pygame.sprite.Sprite.__init__(self)
         self.velocity = velocity  # velocity of the throw
         self.angle = angle
         self.x = x
-        self.time = time
         self.y = y
         self.image = pygame.Surface((50, 50))
-        self.image = [pygame.transform.scale(pygame.image.load("Assets/Alcohol.png"), (50, 50)), pygame.transform.scale(pygame.image.load("Assets/AlcoholBlue.png"), (50, 50)), pygame.transform.scale(pygame.image.load("Assets/AlcoholClear.png"), (50, 50)), pygame.transform.scale(pygame.image.load("Assets/AlcoholGreen.png"), (50, 50)), pygame.transform.scale(pygame.image.load("Assets/AlcoholWhite.png"), (50, 50))]
-        self.image = self.image[random.randint(0,4)]
+        self.image = pygame.transform.scale(pygame.image.load("Assets/shadow.png"), (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (1, self.y)
         self.setInitialVelocityRadians(velocity, angle)
@@ -34,7 +32,6 @@ class Shadow(pygame.sprite.Sprite):
         if self.velocity > 0:
             NOW_MS = pygame.time.get_ticks()
             time_change = (NOW_MS - self.start_time) / 200  # Gravity of the bottle (probably don't change)
-            self.time += 100
             if time_change > 0:
                 #  re-calculate the velocity
                 half_gravity_time_squared = -9.8 * time_change * time_change / 2.0
