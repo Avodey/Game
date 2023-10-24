@@ -5,15 +5,38 @@ import pygame
 from Bottle import Bottle
 from Player import Player
 import time
+import spritesheet
 
 pygame.init()
-
+screen_height = 800
+screen_width = 600
 # Set the size of the game window
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((screen_height, screen_width))
 
 # Name of the game window
 pygame.display.set_caption("First Game")
 
+#Sprites
+sprite_sheet_image = pygame.image.load("Assets/CowBoySheet.png").convert_alpha()
+sprite_sheet = spritesheet.SpriteSheet(sprite_sheet_image)
+
+Black = (0, 0, 0)
+
+# create animation list
+animation_list = []
+animation_steps = [4, 6, 3, 4]
+action = 0
+last_update = pygame.time.get_ticks()
+animation_cooldown = 300
+frame = 0
+step_counter = 0
+
+for animation in animation_steps:
+    temp_img_list = []
+    for _ in range(animation):
+        temp_img_list.append(sprite_sheet.get_image(step_counter, 64, 64, Black))
+        step_counter += 1
+    animation_list.append(temp_img_list)
 # Timer
 timer_font = pygame.font.SysFont('Verdana', 38)
 timer_sec = 60
@@ -43,6 +66,7 @@ backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
 
+# Game loop
 run = True
 while run:  # Checks for the user trying to quit the game
     for event in pygame.event.get():
@@ -60,7 +84,13 @@ while run:  # Checks for the user trying to quit the game
             else:
                 pygame.time.set_timer(timer, 0)  # turns off timer event
                 # Merged loops to fix the stuttering FPS clock hence why it's all up here, if you're going to add a new event, add it to this rather than somewhere else in the code for compatability
-
+    #update animation
+    current_time = pygame.time.get_ticks()
+    if current_time - last_update >= animation_cooldown:
+        frame += 1
+        last_update = current_time
+        if frame >= len(animation_list):
+            frame = 0
     """
     To get smooth movement we need to limit screen updating
     to 60 pixels a second which will allow us to make the
@@ -88,6 +118,8 @@ while run:  # Checks for the user trying to quit the game
     screen.fill((0, 0, 0))  # Fills the background screen with black
     screen.blit(backgroundImage, (0, 0))  # Renders the background
     screen.blit(playerImage, (player.x, player.y))  # Renders the player
+    screen.blit(animation_list[action][frame], (0, 0))
+        
     bottles.update()  # Draws bottle group
     bottles.draw(screen)  # Updates bottle group
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
