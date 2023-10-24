@@ -6,6 +6,8 @@ from Bottle import Bottle
 from Player import Player
 import time
 
+from Shadow import Shadow
+
 pygame.init()
 
 # Set the size of the game window
@@ -24,7 +26,7 @@ score = 0
 score_increment = 10
 font = pygame.font.SysFont('Constansia', 30)
 score_text = font.render(f'Score: {score}', True, (0, 255, 0))
-bottleEntity = []
+angle = 0
 
 # Userevent for timer
 timer = pygame.USEREVENT + 1
@@ -55,9 +57,13 @@ while run:  # Checks for the user trying to quit the game
         if event.type == bottleTimer:
             speed = math.radians(random.randrange(3000, 5000))  # velocity of the throw
             angle = math.radians(random.randrange(15, 45))  # Angle of throw
+            startingY = random.randint(1, screen.get_height())
 
-            bottle = Bottle(0, random.randint(1, screen.get_height()), speed, angle)
+            shadow = Shadow(0, startingY, random.randint(1, 360), time, speed, angle)
+            bottle = Bottle(0, startingY, random.randint(1, 360), speed, angle)
             bottles.add(bottle)
+            bottles.add(shadow)
+
         if event.type == timer:  # checks for timer event
             if timer_sec > 0:
                 timer_sec -= 1
