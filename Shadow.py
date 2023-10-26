@@ -16,7 +16,7 @@ class Shadow(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.image = pygame.Surface((50, 50))
-        self.image = pygame.transform.scale(pygame.image.load("Assets/shadow.png"), (50, 50))
+        #self.image = pygame.transform.scale(pygame.image.load("Assets/shadow.png"), (100, 100))
         self.rect = self.image.get_rect()
         self.rect.center = (1, self.y)
         self.setInitialVelocityRadians(velocity, angle)
@@ -39,6 +39,12 @@ class Shadow(pygame.sprite.Sprite):
                 displacement_y = self.velocity * math.cos(self.angle) * time_change + half_gravity_time_squared
                 # reposition sprite
                 endshadow = self.y - int(displacement_y)
+                shadowsize = self.y-endshadow+20
+                print("-:", self.y-endshadow+20, "+:", self.y+endshadow+20)
+                if self.y > 0:
+                    self.image = pygame.transform.scale(pygame.image.load("Assets/shadow.png"),
+                                                        (shadowsize, shadowsize))
+
                 self.rect.center = (self.x + int(displacement_x), self.y)
                 # Stop at the edge of the window
                 if self.rect.y >= WINDOW_HEIGHT:  # Gravity means we only need this for yAxis
