@@ -19,6 +19,8 @@ pygame.display.set_caption("First Game")
 #Sprites
 sprite_sheet_image = pygame.image.load("Assets/CowBoySheet.png").convert_alpha()
 sprite_sheet = spritesheet.SpriteSheet(sprite_sheet_image)
+walkLeft = [pygame.image.load('Assets/Idle1.png'), pygame.image.load('Assets/Move1.png')]
+walkRight = [pygame.image.load('Assets/Idle1.png'), pygame.image.load('Assets/Move1.png')]
 
 Black = (0, 0, 0)
 
@@ -37,11 +39,17 @@ for animation in animation_steps:
         temp_img_list.append(sprite_sheet.get_image(step_counter, 64, 64, Black))
         step_counter += 1
     animation_list.append(temp_img_list)
-
+x = 50
+y = 400
 # Timer
 timer_font = pygame.font.SysFont('Verdana', 38)
 timer_sec = 60
 timer_text = timer_font.render(time.strftime('%M:%S', time.gmtime(timer_sec)), True, (255, 255, 255))
+
+# Character movement checks
+left = False
+right = False
+walkCount = 0
 
 # Score code
 score = 0
@@ -70,6 +78,26 @@ playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 
 backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.png"), (screen.get_width(), screen.get_height()))  # Renders the player
 # Initiates 'Player.py' class and its starting location on the screen, x and y
 player = Player(1, 1, playerImage)
+
+
+def redrawGameWindow():
+    global walkCount
+    
+    screen.blit(backgroundImage, (0,0))  
+    if walkCount + 1 >= 27:
+        walkCount = 0
+        
+    if left:  
+        screen.blit(walkLeft[walkCount//3], (x,y))
+        walkCount += 1                          
+    elif right:
+        screen.blit(walkRight[walkCount//3], (x,y))
+        walkCount += 1
+    else:
+        screen.blit(playerImage, (x, y))
+        walkCount = 0
+        
+    pygame.display.update() 
 
 run = True
 while run:  # Checks for the user trying to quit the game
@@ -117,10 +145,14 @@ while run:  # Checks for the user trying to quit the game
 
     if keys[pygame.K_LEFT]:
         player.x -= playerSpeed * timedelta  # x = x - speed * seconds
-
+        left = True
+        right = False
+        
     if keys[pygame.K_RIGHT]:
         player.x += playerSpeed * timedelta  # x = x + speed * seconds
-
+        left = False
+        right = True
+        
     if keys[pygame.K_UP]:
         player.y -= playerSpeed * timedelta  # y = y - speed * seconds
 
@@ -129,8 +161,8 @@ while run:  # Checks for the user trying to quit the game
 
     screen.fill((0, 0, 0))  # Fills the background screen with black
     screen.blit(backgroundImage, (0, 0))  # Renders the background
-    screen.blit(playerImage, (player.x, player.y))  # Renders the player
-    screen.blit(animation_list[action][frame], (0, 0))
+    # Renders the player
+    screen.blit(animation_list[action][frame], (player.x, player.y))
     bottles.update()  # Draws bottle group
     bottles.draw(screen)  # Updates bottle group
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
