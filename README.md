@@ -6,7 +6,7 @@ This is a game about a drunken cowboy who enters a bar seeking more alcohol, due
 - PyGame
 - Python 3.2+
 - 800x600 Display
-- Keyboard And Mouse/Controller
+- Keyboard And Mouse
 - MacOS/Windows 7 or newer
 - 512MB RAM
 - 50MB Storage Avaliable
