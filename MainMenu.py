@@ -57,10 +57,9 @@ while True:
                         AudioSound()
                         Exit() #Exits the application
                     elif setting_rect.collidepoint(event.pos):
-                        AudioSound()
+                        Click.play() #No need for delay
                         HideMain() #Hides the main menu and displays setting menu
                         MenuType = False #Makes MenuType false which will allow it to go to settings
-                        print(MenuType)
                         pygame.event.clear
                     
                 if MenuType == False: #Checks if MenuType is false, else go to main menu
@@ -68,6 +67,6 @@ while True:
                         AudioSound()
                         os.system('python ColourBlind.py') #Opens colourblind file
                     if back_rect.collidepoint(event.pos):
-                        AudioSound()
+                        Click.play() #No need for delay
                         screen.blit(background, (0, 0)) #Displays the main menu
                         MenuType = True #Makes MenuType true to head back to the main menu
