@@ -2,7 +2,8 @@ import math
 import random
 import time
 import pygame
-import Player
+from pygame import Rect
+
 from Bottle import Bottle
 from Player import Player
 import spritesheet
@@ -53,13 +54,13 @@ font = pygame.font.SysFont('Constansia', 30)
 score_text = font.render(f'Score: {score}', True, (0, 255, 0))
 angle = 0
 
-# Userevent for timer
+# Userevent for timer2
 timer = pygame.USEREVENT + 1
 pygame.time.set_timer(timer, 1000)  # sets timer with USEREVENT and delay in milliseconds
 
 # Userevent for bottle throw speed
 bottleTimer = 0
-pygame.time.set_timer(bottleTimer, 2000)  # sets timer with USEREVENT and delay in milliseconds
+pygame.time.set_timer(bottleTimer, 1000)  # sets timer with USEREVENT and delay in milliseconds
 
 # Clock to allow for smooth movement
 clock = pygame.time.Clock()
@@ -73,7 +74,8 @@ backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.
                                          (screen.get_width(), screen.get_height()))  # Renders the player
 # backgroundImage.fill(((213, 255, 0), (0, 100, 17), (255, 102, 0)) + (0,), None, pygame.BLEND_RGBA_ADD) # COLORBLIND ACCESSABILITY CONCEPT - DO NOT DELETE
 # Initiates 'Player.py' class and its starting location on the screen, x and y
-player = Player(screen.get_width()/2, screen.get_height()/2)  # Spawns player in the middle of the screen
+player = Player(screen, screen.get_width()/2, screen.get_height()/2)  # Spawns player in the middle of the screen
+
 
 run = True
 while run:  # Checks for the user trying to quit the game
@@ -88,6 +90,18 @@ while run:  # Checks for the user trying to quit the game
             bottle = Bottle(0, startingY, random.randrange(1, 360), screen, speed, angle)  # New random bottle class above the shadow class
             bottles.add(shadow)  # Spawns in a shadow
             bottles.add(bottle)  # Spawns in a bottle
+
+            # PLEASE FIX ME
+
+            if bottle.x < player.x:
+                print("bottle is left")
+                if bottle.y < player.y:
+                    print("bottle is above")
+                    if bottle.x + 50 < player.x + 50:
+                        print("p4u3254y5")
+                        if bottle.y+50 < player.y+50:
+                            print("Test!")
+
 
         if event.type == timer:  # checks for timer event
             if timer_sec > 0:
@@ -134,6 +148,9 @@ while run:  # Checks for the user trying to quit the game
     screen.blit(animation_list[action][frame], (player.x, player.y))
     bottles.update()  # Draws bottle group
     bottles.draw(screen)  # Updates bottle group
+    player_rect = Rect(player.x+10, player.y, 45, 70)
+    pygame.draw.rect(screen, (255, 0, 0), player_rect, 2)
+
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
     screen.blit(timer_text, (300, 20))
     score_text = font.render(f'Score: {score}', True, (255, 255, 255))
