@@ -151,6 +151,13 @@ while run:  # Checks for the user trying to quit the game
     player_rect = Rect(player.x+10, player.y, 45, 70)
     pygame.draw.rect(screen, (255, 0, 0), player_rect, 2)
 
+    for x in bottles.sprites():
+        if (player_rect.colliderect):
+            if type(x) is not type(shadow):
+                print("hit")
+            else:
+                print("hit2")
+
     # add another "if timer_sec > 0" here if you want the timer to disappear after reaching 0
     screen.blit(timer_text, (300, 20))
     score_text = font.render(f'Score: {score}', True, (255, 255, 255))
