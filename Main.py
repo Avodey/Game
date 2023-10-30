@@ -17,7 +17,11 @@ screen_width = 600
 screen = pygame.display.set_mode((screen_height, screen_width))
 
 # Name of the game window
-pygame.display.set_caption("First Game")
+pygame.display.set_caption("The Good, The Bad and The Drunk")
+
+#Icon image
+new_icon=pygame.image.load("Assets/cowboy_v2.png")
+pygame.display.set_icon(new_icon)
 
 # Sprites
 sprite_sheet_image = pygame.image.load("Assets/CowBoySheet.png").convert_alpha()
