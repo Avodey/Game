@@ -26,9 +26,7 @@ pygame.display.set_icon(new_icon)
 # Sprites
 sprite_sheet_image = pygame.image.load("Assets/CowBoySheet.png").convert_alpha()
 sprite_sheet = spritesheet.SpriteSheet(sprite_sheet_image)
-
 playerImage = pygame.transform.scale(pygame.image.load('Assets/Alcohol.png'), (50, 50))
-
 Black = (0, 0, 0)
 
 # create animation list
@@ -127,21 +125,29 @@ while run:  # Checks for the user trying to quit the game
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT]:
-        player.x -= playerSpeed * timedelta  # x = x - speed * seconds
-
+        if player_rect.left <= 0:
+            pass
+        else: player.x -= playerSpeed * timedelta  # x = x - speed * seconds
     if keys[pygame.K_RIGHT]:
-        player.x += playerSpeed * timedelta  # x = x + speed * seconds
+        if player_rect.right >= 800:
+            pass
+        else: player.x += playerSpeed * timedelta  # x = x + speed * seconds
 
     if keys[pygame.K_UP]:
-        player.y -= playerSpeed * timedelta  # y = y - speed * seconds
+        if player_rect.top <= 0:
+            pass
+        else: player.y -= playerSpeed * timedelta  # y = y - speed * seconds
 
     if keys[pygame.K_DOWN]:
-        player.y += playerSpeed * timedelta  # y = y + speed * seconds
+        if player_rect.bottom >= 600:
+            pass
+        else: player.y += playerSpeed * timedelta  # y = y + speed * seconds
 
     screen.fill((0, 0, 0))  # Fills the background screen with black
 
     screen.blit(backgroundImage, (0, 0))  # Renders the background
     screen.blit(animation_list[action][frame], (player.x, player.y))
+    
     bottles.update()  # Draws bottle group
     bottles.draw(screen)  # Updates bottle group
     player_rect = Rect(player.x+10, player.y, 45, 70)
