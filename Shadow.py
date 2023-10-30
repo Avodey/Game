@@ -1,12 +1,11 @@
 import math
-import random
 import pygame
 
 clock = pygame.time.Clock()
-# milliseconds since start
 NOW_MS = 0
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
+
 
 class Shadow(pygame.sprite.Sprite):
     def __init__(self, x, y, velocity=0, angle=0):
@@ -31,7 +30,7 @@ class Shadow(pygame.sprite.Sprite):
         global NOW_MS
         if self.velocity > 0:
             NOW_MS = pygame.time.get_ticks()
-            time_change = (NOW_MS - self.start_time) / 200  # Gravity of the bottle (probably don't change)
+            time_change = (NOW_MS - self.start_time) / 200  # Gravity of the bottle
             if time_change > 0:
                 #  re-calculate the velocity
                 half_gravity_time_squared = -9.8 * time_change * time_change / 2.0
@@ -39,6 +38,11 @@ class Shadow(pygame.sprite.Sprite):
                 displacement_y = self.velocity * math.cos(self.angle) * time_change + half_gravity_time_squared
                 # reposition sprite
                 endshadow = self.y - int(displacement_y)
+                shadowsize = self.y - endshadow + 20
+                if shadowsize < 0:  # Prevents negative int from crashing the game
+                    shadowsize = 0
+                self.image = pygame.transform.scale(pygame.image.load("Assets/shadow.png"),
+                                                    (shadowsize, shadowsize))
                 self.rect.center = (self.x + int(displacement_x), self.y)
                 # Stop at the edge of the window
                 if self.rect.y >= WINDOW_HEIGHT:  # Gravity means we only need this for yAxis
