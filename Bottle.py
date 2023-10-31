@@ -16,9 +16,9 @@ class Bottle(pygame.sprite.Sprite):
         self.velocity = velocity  # velocity of the throw
         self.angle = angle
         self.x = x
+        self.y = y
         self.screen = screen
         self.randomrotation = randomrotation
-        self.y = y
         self.image = pygame.Surface((50, 50))
         self.image = [pygame.transform.scale(pygame.image.load("Assets/Alcohol.png"), (50, 50)),
                       pygame.transform.scale(pygame.image.load("Assets/AlcoholBlue.png"), (50, 50)),
@@ -27,7 +27,6 @@ class Bottle(pygame.sprite.Sprite):
                       pygame.transform.scale(pygame.image.load("Assets/AlcoholWhite.png"), (50, 50))]
         self.image = self.image[random.randint(0, 4)]
         self.rect = self.image.get_rect()
-
         self.hitbox = (self.x + 50, self.y, 50, 50)
         self.image = pygame.transform.rotate(self.image, randomrotation)
         self.rect.center = (1, self.y)
@@ -54,8 +53,8 @@ class Bottle(pygame.sprite.Sprite):
                 # reposition sprite
                 self.rect.center = (self.x + int(displacement_x), self.y - int(displacement_y))
                 if self.y-displacement_y > self.y-55:
-                    bottle_rect = Rect(displacement_x-10, self.y-displacement_y-10, 40, 40)
-                    pygame.draw.rect(self.screen, (255, 0, 0), bottle_rect, 2)
+                    self.rect = Rect(displacement_x-10, self.y-displacement_y-10, 40, 40)
+                    pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 2)
                 # Stop at the edge of the window
                 if self.rect.y >= WINDOW_HEIGHT:  # Gravity means we only need this for yAxis
                     self.velocity = 0  # This will set the bottle velocity to 0
