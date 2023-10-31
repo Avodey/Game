@@ -50,8 +50,8 @@ while True:
                 if MenuType == True: #Checks if MenuType is true, else go to Settings menu
                     if start_rect.collidepoint(event.pos): #Function for Start Button using collision point 
                         AudioSound() #plays sound effect and adds small delay for a premium feel of the game and allows time for the sound effect to play
-                        pygame.mixer.pause() #Stops the main menu music playing in game and closes off any extra sound effects
-                        os.system('python Main.py') #Opens the main game
+                        pygame.mixer.fadeout(1000) #Stops the main menu music playing in game and closes off any extra sound effects by fading out the main menu music making the Cutscene transition seemless
+                        os.system('python Cutscene.py') #Opens the cutscene to make it seemless
                         Exit()
                     elif exit_rect.collidepoint(event.pos):
                         AudioSound()
