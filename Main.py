@@ -66,7 +66,7 @@ pygame.time.set_timer(timer, 1000)  # sets timer with USEREVENT and delay in mil
 
 # Userevent for bottle throw speed
 bottleTimer = 0
-pygame.time.set_timer(bottleTimer, 500)  # sets timer with USEREVENT and delay in milliseconds
+pygame.time.set_timer(bottleTimer, 300)  # sets timer with USEREVENT and delay in milliseconds
 
 # Clock to allow for smooth movement
 clock = pygame.time.Clock()
