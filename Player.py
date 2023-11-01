@@ -16,7 +16,6 @@ class Player:
         sprite_sheet_image = pygame.image.load("Assets/CowBoySheet.png").convert_alpha()
         sprite_sheet = spritesheet.SpriteSheet(sprite_sheet_image)
 
-
         # create animation list
         animation_list = []
         animation_steps = [4, 6, 3, 4]

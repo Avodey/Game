@@ -4,12 +4,14 @@ import os
 
 pygame.init()
 
+CutsceneSound = pygame.mixer.Sound("Assets/MainMenu.mp3") #Gives click the value of that sound, can be called in each button.
 SCREEN_WIDTH = 800  # Width of the game window
 SCREEN_HEIGHT = 600  # Height of the game window
 FPS = 60  # Frames per second, used to control the game's frame rate
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  # Create a window with the specified dimensions
 pygame.display.set_caption("The Good, The Bad And The Drunk")  # Set the title of the window
 clock = pygame.time.Clock()  # Create a clock object to manage updates
+CutsceneSound.play()
 
 def Quit(): #Optimization so that this code doesn't need to be called several times for optimization.
     pygame.quit
@@ -31,7 +33,7 @@ def FadeIn(): #Major optimization to save on heavy amounts of code
     imagecount += 1 #Adds 1 to the imagecounter to go through the images
     fade_image(images[imagecount], fade_in=True) #Depending on the value of imagecount will be the image that shows in the list
 
-image_files = ['Assets/MainMenuV3.png', 'Assets/image.jpg', 'Assets/TempBackgr.png'] #All images in the cutscene, add more here if you want to expand upon it
+image_files = ['Assets/MainMenuV3.png', 'Assets/image.jpg', 'Assets/image1.jpg', 'Assets/image2.jpg', 'Assets/image3.jpg', 'Assets/image4.jpg', 'Assets/image5.jpg'] #All images in the cutscene, add more here if you want to expand upon it
 
 # Load images and scale them to the screen size
 # This loop goes through each image path, loads the image, applies alpha transparency,
@@ -80,7 +82,32 @@ def run_cutscene():
 
     fade_image(images[2])
 
-    #add CutsceneFunc() and fade_image(images[CURRENTIMAGE]) for more scenes and add a new one to the list.
+    FadeIn()
+
+    CutsceneFunc()
+
+    fade_image(images[3])
+
+    FadeIn()
+
+    CutsceneFunc()
+
+    fade_image(images[4])
+
+    FadeIn()
+
+    CutsceneFunc()
+
+    fade_image(images[5])
+
+    FadeIn()
+
+    CutsceneFunc()
+
+    pygame.mixer.fadeout(1000)
+    fade_image(images[6])
+
+    #add CutsceneFunc() and fade_image(images[CURRENTIMAGE]) for more scenes and add a new one to the list. and a fade out mixer with pygame.quit
 
     os.system('python main.py') #Runs the Main.py after all cutscenes
 run_cutscene() # Start the cutscene program by calling run_cutscene()
