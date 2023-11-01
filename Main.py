@@ -8,10 +8,11 @@ from Bottle import Bottle
 from Player import Player
 import spritesheet
 from Shadow import Shadow
+import os
 
 pygame.init()
-screen_height = 800
 screen_width = 600
+screen_height = 800
 # Set the size of the game window
 screen = pygame.display.set_mode((screen_height, screen_width))
 
@@ -36,6 +37,8 @@ animation_cooldown = 300
 frame = 0
 step_counter = 0
 health = 3
+
+ended = False #for the variable to go back to the main menu
 
 player_hit = False
 FLOOR_HEIGHT = 50
@@ -203,7 +206,13 @@ while run:  # Checks for the user trying to quit the game
         timer_sec = 0
         screen.blit(gameover, (
         screen.get_width() / 2 - gameover.get_width() / 2, screen.get_height() / 2 - gameover.get_height() / 2))
+        ended = True #allows all other functionality with the ending screen to play out
     pygame.display.update()  # Updates the screen rendering. Only one is needed at any time.
+    if ended == True: #Allows pygame.display to update
+        time.sleep(1) #waits 1 second
+        os.system('python MainMenu.py') #goes back to home screen
+        pygame.quit()
+
 
     if drunkenness > 0:
         current_time = pygame.time.get_ticks()
