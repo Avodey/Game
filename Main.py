@@ -78,7 +78,13 @@ bottles = pygame.sprite.Group()
 playerImage = pygame.transform.scale(pygame.image.load("Assets/Guy.png"), (100, 100))
 backgroundImage = pygame.transform.scale(pygame.image.load("Assets/BackgroundV2.png"),
                                          (screen.get_width(), screen.get_height()))
+
 powerup = Powerup(100, 100, 100, 100, pygame.image.load("Assets/PowerUp.png"))
+
+drunk_increase = 0 #Creates the variable and value for the drunk increase
+drunkenness = 0 #Creates the drunkness value
+last_drunkenness_update = pygame.time.get_ticks()
+drunkenness_cooldown = 3000  #Cooldown for the drunkness (needs fixing ASAP)
 
 # backgroundImage.fill(((213, 255, 0), (0, 100, 17), (255, 102, 0)) + (0,), None, pygame.BLEND_RGBA_ADD) # COLORBLIND ACCESSABILITY CONCEPT - DO NOT DELETE
 # Initiates 'Player.py' class and its starting location on the screen, x and y
@@ -175,6 +181,8 @@ while run:  # Checks for the user trying to quit the game
                 print("Powerup touched")
                 score += 10
                 timer_sec += 2
+                drunk_increase += 1 # Increases 1 to the drunkness counter which increases the player random movement
+                drunkenness += drunk_increase
                 powerup.add()
                 break  # Exit the loop
 
@@ -196,5 +204,18 @@ while run:  # Checks for the user trying to quit the game
         screen.blit(gameover, (
         screen.get_width() / 2 - gameover.get_width() / 2, screen.get_height() / 2 - gameover.get_height() / 2))
     pygame.display.update()  # Updates the screen rendering. Only one is needed at any time.
+
+    if drunkenness > 0:
+        current_time = pygame.time.get_ticks()
+    if current_time - last_drunkenness_update >= drunkenness_cooldown: #Using previously declared delay to ensure that the drunkness deducter won't just make the player never drunk
+        drunkenness -= 1 #Deducts -1 drunk status from the counter over time to make the game more fair for the player ensuring they balance time with points/drunkness
+        last_drunkenness_update = current_time
+        print(drunkenness) #Just a testing line to see the current status of the drunk level, the higher the number the quicker the random movements.
+
+    if random.random() < (1 * drunkenness):  # adjust probability based on drunkenness level
+        directions = [(-2, 0), (2, 0), (0, -2), (0, 2)] #Each direction and the speed on which it goes (set it to 2 as it adds more dramatic effect.)
+        dx, dy = random.choice(directions) #randomizes directions
+        player.x += dx * (playerSpeed * timedelta) #X direction
+        player.y += dy * (playerSpeed * timedelta) #Y direction
 
 pygame.quit()
