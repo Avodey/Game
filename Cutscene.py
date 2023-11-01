@@ -33,7 +33,7 @@ def FadeIn(): #Major optimization to save on heavy amounts of code
     imagecount += 1 #Adds 1 to the imagecounter to go through the images
     fade_image(images[imagecount], fade_in=True) #Depending on the value of imagecount will be the image that shows in the list
 
-image_files = ['Assets/MainMenuV3.png', 'Assets/image.jpg', 'Assets/TempBackgr.png'] #All images in the cutscene, add more here if you want to expand upon it
+image_files = ['Assets/MainMenuV3.png', 'Assets/image.jpg', 'Assets/image1.jpg', 'Assets/image2.jpg'] #All images in the cutscene, add more here if you want to expand upon it
 
 # Load images and scale them to the screen size
 # This loop goes through each image path, loads the image, applies alpha transparency,
@@ -82,7 +82,13 @@ def run_cutscene():
 
     fade_image(images[2])
 
-    #add CutsceneFunc() and fade_image(images[CURRENTIMAGE]) for more scenes and add a new one to the list.
+    FadeIn()
+
+    CutsceneFunc()
+
+    fade_image(images[3])
+
+    #add CutsceneFunc() and fade_image(images[CURRENTIMAGE]) for more scenes and add a new one to the list. and a fade out mixer with pygame.quit
 
     os.system('python main.py') #Runs the Main.py after all cutscenes
 run_cutscene() # Start the cutscene program by calling run_cutscene()
