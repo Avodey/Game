@@ -172,7 +172,7 @@ while run:  # Checks for the user trying to quit the game
     bottles.update()  # Draws bottle group
     bottles.draw(screen)  # Updates bottle group
     player_rect = Rect(player.x + 10, player.y, 45, 70)
-    pygame.draw.rect(screen, (255, 0, 0), player_rect, 2)
+    #  pygame.draw.rect(screen, (255, 0, 0), player_rect, 2)
 
     for bottle in bottles.sprites():
         if isinstance(bottle, Bottle):
