@@ -44,7 +44,6 @@ class Bottle(pygame.sprite.Sprite):
             NOW_MS = pygame.time.get_ticks()
 
             time_change = (NOW_MS - self.start_time) / 200  # Gravity of the bottle (probably don't change)
-            self.randomrotation += 100
             if time_change > 0:
                 #  re-calculate the velocity
                 half_gravity_time_squared = -9.8 * time_change * time_change / 2.0
@@ -54,7 +53,7 @@ class Bottle(pygame.sprite.Sprite):
                 self.rect.center = (self.x + int(displacement_x), self.y - int(displacement_y))
                 if self.y-displacement_y > self.y-55:
                     self.rect = Rect(displacement_x-10, self.y-displacement_y-10, 40, 40)
-                    #  pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 2)
+                    #  pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 2) # Draws a hitbox for debugging
                 # Stop at the edge of the window
                 if self.rect.y >= WINDOW_HEIGHT:  # Gravity means we only need this for yAxis
                     self.velocity = 0  # This will set the bottle velocity to 0
