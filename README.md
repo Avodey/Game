@@ -19,6 +19,8 @@ This is a game about a drunken cowboy who enters a bar seeking more alcohol, due
 3. [Write-up](https://docs.google.com/document/d/1frIq7qKG5ZQoPjVNes0Pxc5VhkG27GgfHQkJwp5b-M4/edit?usp=sharing)
 4. [GitHub Page](https://github.com/Avodey/Game)
 5. [Wiki](https://github.com/Avodey/Game/wiki)
+6. [PowerPoint](https://github.com/Avodey/Game/files/13238324/The.Good.The.Bad.and.The.Drunk.pptx)
+
 
 Please Note If You're Unable To Access Any Of These Links, Request For Access
 
